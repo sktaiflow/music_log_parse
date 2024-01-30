@@ -30,7 +30,7 @@ default_args = {
 yesterday = (datetime.today() - timedelta(days=1)).strftime('%Y%m%d')
 
 with DAG(
-    "flo_user_cluster_table",
+    "flo_log",
     default_args=default_args,
     description="DAG with own plugins",
     schedule="0 9 * * *",
