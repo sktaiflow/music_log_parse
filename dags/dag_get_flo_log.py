@@ -34,7 +34,7 @@ with DAG(
     "flo_log", #name of dag appear in ui
     default_args=default_args,
     description="DAG with own plugins",
-    schedule="45 10 * * *",
+    schedule="15 11 * * *",
     start_date=pendulum.datetime(2023, 1, 1, tz=local_tz),
     catchup=True,
     max_active_runs=5,
@@ -63,18 +63,28 @@ with DAG(
         timeout=60 * 60 * 24,
         dag=dag )
     
+    def test():
+        print('done')
+        
+    t1 = PythonOperator(task_id = 'test',
+                       python_callable=test,
+                       dag = dag)
     
-    test1 = NesOperator(
-       task_id="test_task1",
-       parameters={"current_dt": "{{ ds_nodash }}"},
-       input_nb="./notebook/sense_test.ipynb",
-)
+    flo_meta_sensor >> t1
+    
+    
+    
+#     test1 = NesOperator(
+#        task_id="test_task1",
+#        parameters={"current_dt": "{{ ds_nodash }}"},
+#        input_nb="./notebook/sense_test.ipynb",
+# )
     
     
     
     
-    start >> flo_meta_sensor
+#     start >> flo_meta_sensor
     
-    flo_meta_sensor >> test1
+#     flo_meta_sensor >> test1
     
-    test1 >> end
+#     test1 >> end
