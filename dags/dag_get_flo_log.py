@@ -63,14 +63,25 @@ with DAG(
         timeout=60 * 60 * 24,
         dag=dag )
     
-    def test():
-        print('done')
-        
-    t1 = PythonOperator(task_id = 'test',
-                       python_callable=test,
-                       dag = dag)
     
-    flo_meta_sensor >> t1
+    
+    
+    dist_cp = NesOperator(
+       task_id="dist_cp",
+       parameters={"current_dt": "{{ ds_nodash }}"},
+       input_nb="./notebook/distcp.ipynb",
+        )
+    
+    flo_meta_sensor >> dist_cp
+    
+    # def test():
+    #     print('done')
+        
+#     t1 = PythonOperator(task_id = 'test',
+#                        python_callable=test,
+#                        dag = dag)
+    
+#     flo_meta_sensor >> t1
     
     
     
