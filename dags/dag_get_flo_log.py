@@ -34,7 +34,7 @@ with DAG(
     "flo_log", #name of dag appear in ui
     default_args=default_args,
     description="DAG with own plugins",
-    schedule="15 11 * * *",
+    schedule="15 12 * * *",
     start_date=pendulum.datetime(2023, 1, 1, tz=local_tz),
     catchup=True,
     max_active_runs=5,
